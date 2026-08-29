@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import MenuCliente from "./pages/MenuCliente";
 import Bienvenida from "./pages/Bienvenida";
 import DashboardCocina from "./pages/DashboardCocina"; // <-- Importamos
+import DashboardMesero from "./pages/DashboardMesero"; // <-- Importamos
 
 function App() {
   return (
@@ -15,6 +16,9 @@ function App() {
 
         {/* Nueva ruta para el monitor de la cocina */}
         <Route path="/cocina" element={<DashboardCocina />} />
+
+        {/* Nueva ruta para la aplicación del mesero */}
+        <Route path="/mesero" element={<DashboardMesero />} />
         
         {/* Si escriben una ruta que no existe, los mandamos al inicio */}
         <Route path="*" element={<Navigate to="/" />} />
