@@ -3,24 +3,27 @@ import MenuCliente from "./pages/MenuCliente";
 import Bienvenida from "./pages/Bienvenida";
 import DashboardCocina from "./pages/DashboardCocina"; // <-- Importamos
 import DashboardMesero from "./pages/DashboardMesero"; // <-- Importamos
+import DashboardAdmin from "./pages/DashboardAdmin"; // <-- Importamos
+import DashboardSuperAdmin from "./pages/DashboardSuperAdmin"; // <-- Importamos
+import Login from "./pages/Login"; // <-- Importamos
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Pantalla inicial para escanear/ingresar a la mesa */}
+        {/* Vistas del Cliente */}
         <Route path="/" element={<Bienvenida />} />
-
-        {/* Pantalla del menú */}
         <Route path="/menu" element={<MenuCliente />} />
 
-        {/* Nueva ruta para el monitor de la cocina */}
+        {/* Vistas del Personal */}
+        <Route path="/login" element={<Login />} />
         <Route path="/cocina" element={<DashboardCocina />} />
-
-        {/* Nueva ruta para la aplicación del mesero */}
         <Route path="/mesero" element={<DashboardMesero />} />
-        
-        {/* Si escriben una ruta que no existe, los mandamos al inicio */}
+
+        {/* Vistas Administrativas */}
+        <Route path="/admin" element={<DashboardAdmin />} />
+        <Route path="/superadmin" element={<DashboardSuperAdmin />} />
+
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>
