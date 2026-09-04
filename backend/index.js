@@ -1,52 +1,3 @@
-// const express = require('express');
-// const cors = require('cors');
-// require('dotenv').config();
-// const sequelize = require('./config/db');
-
-// // Importar la base de datos con todas sus relaciones ya configuradas
-// const db = require('./models'); 
-// // db.Restaurante, db.Mesa, db.Producto ya están listos para usarse
-
-// const app = express();
-
-// // Middlewares
-// app.use(cors());
-// app.use(express.json()); // Para que Express entienda JSON
-
-// // ==========================================
-// // IMPORTAR Y USAR RUTAS AQUÍ
-// // ==========================================
-// const menuRoutes = require('./routes/menuRoutes');
-// const sesionRoutes = require('./routes/sesionRoutes');
-// const ordenRoutes = require('./routes/ordenRoutes');
-
-// app.use('/api/ordenes', ordenRoutes);
-// app.use('/api/sesion', sesionRoutes);
-// app.use('/api/menu', menuRoutes);
-
-// // Ruta de prueba
-// app.get('/api/ping', (req, res) => {
-//     res.json({ mensaje: 'El backend de PediSoft está vivo 🚀' });
-// });
-
-// // Configurar puerto
-// const PORT = process.env.PORT || 3000;
-
-// // Levantar servidor y conectar BD
-// app.listen(PORT, async () => {
-//     console.log(`Servidor corriendo en el puerto ${PORT}`);
-//     try {
-//         await sequelize.authenticate();
-//         console.log('✅ Conexión a la base de datos establecida con éxito.');
-        
-//         // Opcional: sequelize.sync() crea las tablas si no existen.
-//         // Como ya las creaste en SQL, no es estrictamente necesario, pero es útil.
-//         // await sequelize.sync({ alter: true }); 
-//     } catch (error) {
-//         console.error('❌ Error al conectar con la base de datos:', error);
-//     }
-// });
-
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
@@ -107,21 +58,27 @@ app.use(express.json());
 const menuRoutes = require('./routes/menuRoutes');
 const sesionRoutes = require('./routes/sesionRoutes');
 const ordenRoutes = require('./routes/ordenRoutes');
+const authRoutes = require('./routes/authRoutes');
+const restauranteRoutes = require('./routes/restauranteRoutes');
 
 app.use('/api/menu', menuRoutes);
 app.use('/api/sesion', sesionRoutes);
 app.use('/api/ordenes', ordenRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/restaurantes', restauranteRoutes);
 
 // ==========================================
 // LEVANTAR EL SERVIDOR (OJO: Ahora usamos server.listen, no app.listen)
 // ==========================================
+
 const PORT = process.env.PORT || 3000;
 
 server.listen(PORT, async () => {
     console.log(`Servidor HTTP y WebSockets corriendo en el puerto ${PORT}`);
     try {
-        await db.sequelize.authenticate();
-        console.log('✅ Conexión a la base de datos establecida con éxito.');
+        // CAMBIO AQUÍ: Usamos sync con alter: true para actualizar la tabla sin borrar datos
+        await db.sequelize.sync({ alter: true });
+        console.log('✅ Base de datos sincronizada y actualizada con éxito.');
     } catch (error) {
         console.error('❌ Error al conectar con la base de datos:', error);
     }
