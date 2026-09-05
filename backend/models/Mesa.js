@@ -6,6 +6,10 @@ const Mesa = sequelize.define('Mesa', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
+    restaurante_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
     qr_codigo: {
         type: DataTypes.STRING,
         allowNull: false,

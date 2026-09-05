@@ -2,6 +2,7 @@ const crypto = require('crypto');
 const db = require('../models');
 const Mesa = db.Mesa;
 const CuentaMesa = db.CuentaMesa;
+const Restaurante = db.Restaurante;
 
 const iniciarSesionMesa = async (req, res) => {
     try {
@@ -48,6 +49,42 @@ const iniciarSesionMesa = async (req, res) => {
     } catch (error) {
         console.error('Error al iniciar sesión de mesa:', error);
         res.status(500).json({ error: 'Error interno del servidor.' });
+    }
+};
+
+// ==========================================
+// VALIDAR CÓDIGO QR ESCANEADO (PÚBLICO)
+// ==========================================
+const validarMesa = async (req, res) => {
+    try {
+        const { token } = req.params;
+
+        // 1. Buscamos la mesa que coincida con el token exacto
+        const mesa = await Mesa.findOne({ 
+            where: { qr_codigo: token } 
+        });
+
+        if (!mesa) {
+            return res.status(404).json({ error: 'El código de esta mesa es inválido o no existe.' });
+        }
+
+        // 2. Buscamos el nombre del restaurante dueño de esa mesa
+        const restaurante = await Restaurante.findByPk(mesa.restaurante_id);
+
+        if (!restaurante) {
+            return res.status(404).json({ error: 'Restaurante no encontrado.' });
+        }
+
+        // 3. Le respondemos a React con los datos exactos que necesita
+        res.status(200).json({
+            restaurante_nombre: restaurante.nombre,
+            numero_mesa: mesa.numero_mesa,
+            restaurante_id: restaurante.id
+        });
+
+    } catch (error) {
+        console.error('Error al validar la mesa:', error);
+        res.status(500).json({ error: 'Error interno del servidor al validar el QR.' });
     }
 };
 
@@ -123,5 +160,6 @@ const cerrarCuentaMesa = async (req, res) => {
 
 module.exports = {
     iniciarSesionMesa,
-    cerrarCuentaMesa
+    cerrarCuentaMesa,
+    validarMesa
 };

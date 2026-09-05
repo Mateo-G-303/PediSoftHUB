@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import MenuCliente from "./pages/MenuCliente";
 import Bienvenida from "./pages/Bienvenida";
-import DashboardCocina from "./pages/DashboardCocina"; // <-- Importamos
-import DashboardMesero from "./pages/DashboardMesero"; // <-- Importamos
-import DashboardAdmin from "./pages/DashboardAdmin"; // <-- Importamos
-import DashboardSuperAdmin from "./pages/DashboardSuperAdmin"; // <-- Importamos
-import Login from "./pages/Login"; // <-- Importamos
+import DashboardCocina from "./pages/DashboardCocina";
+import DashboardMesero from "./pages/DashboardMesero";
+import DashboardAdmin from "./pages/DashboardAdmin";
+import DashboardSuperAdmin from "./pages/DashboardSuperAdmin"; // Corregido el nombre si aplica
+import Login from "./pages/Login";
 
 function App() {
   return (
@@ -13,6 +13,10 @@ function App() {
       <Routes>
         {/* Vistas del Cliente */}
         <Route path="/" element={<Bienvenida />} />
+        
+        {/* NUEVA RUTA: Atrapa el código QR desde la URL */}
+        <Route path="/mesa/:token" element={<Bienvenida />} /> 
+        
         <Route path="/menu" element={<MenuCliente />} />
 
         {/* Vistas del Personal */}

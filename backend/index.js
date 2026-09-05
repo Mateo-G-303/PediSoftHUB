@@ -60,12 +60,14 @@ const sesionRoutes = require('./routes/sesionRoutes');
 const ordenRoutes = require('./routes/ordenRoutes');
 const authRoutes = require('./routes/authRoutes');
 const restauranteRoutes = require('./routes/restauranteRoutes');
+const mesaRoutes = require('./routes/mesaRoutes');
 
 app.use('/api/menu', menuRoutes);
 app.use('/api/sesion', sesionRoutes);
 app.use('/api/ordenes', ordenRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/restaurantes', restauranteRoutes);
+app.use('/api/mesas', mesaRoutes);
 
 // ==========================================
 // LEVANTAR EL SERVIDOR (OJO: Ahora usamos server.listen, no app.listen)

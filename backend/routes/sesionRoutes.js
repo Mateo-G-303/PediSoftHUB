@@ -6,4 +6,6 @@ const sesionController = require('../controllers/sesionController');
 router.post('/iniciar', sesionController.iniciarSesionMesa);
 router.patch('/:id/pagar', sesionController.cerrarCuentaMesa);
 
+router.get('/validar-mesa/:token', sesionController.validarMesa);
+
 module.exports = router;
